@@ -100,9 +100,9 @@
   var calcData = updateStats();
 
   // --- Charts ---
-  var chart = echarts.init(document.getElementById('chart-main'), null, { renderer: 'svg' });
-  var devChart = echarts.init(document.getElementById('chart-deviation'), null, { renderer: 'svg' });
-  var rsiChart = echarts.init(document.getElementById('chart-rsi'), null, { renderer: 'svg' });
+  var chart = echarts.init(document.getElementById('chart-main'), null, { renderer: 'svg', group: 'gza-charts' });
+  var devChart = echarts.init(document.getElementById('chart-deviation'), null, { renderer: 'svg', group: 'gza-charts' });
+  var rsiChart = echarts.init(document.getElementById('chart-rsi'), null, { renderer: 'svg', group: 'gza-charts' });
 
   function buildMainData() {
     var closeArr = currentMode === 'gza' ? GZA_CLOSE : ZXL_CLOSE;
@@ -573,9 +573,6 @@
   rsiChart.setOption(getRSIOption());
 
   // Connect charts for synchronized zoom/pan
-  chart.group = 'gza-charts';
-  devChart.group = 'gza-charts';
-  rsiChart.group = 'gza-charts';
   echarts.connect('gza-charts');
 
   window.addEventListener('resize', function() {
