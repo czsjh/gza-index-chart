@@ -101,8 +101,11 @@
 
   // --- Charts ---
   var chart = echarts.init(document.getElementById('chart-main'), null, { renderer: 'svg' });
+  chart.group = 'gza-charts';
   var devChart = echarts.init(document.getElementById('chart-deviation'), null, { renderer: 'svg' });
+  devChart.group = 'gza-charts';
   var rsiChart = echarts.init(document.getElementById('chart-rsi'), null, { renderer: 'svg' });
+  rsiChart.group = 'gza-charts';
 
   function buildMainData() {
     var closeArr = currentMode === 'gza' ? GZA_CLOSE : ZXL_CLOSE;
@@ -364,15 +367,6 @@
           lineStyle: { color: rule, opacity: 0.4 }
         }
       },
-      dataZoom: [
-        {
-          type: 'inside',
-          xAxisIndex: [0, 1, 2],
-          start: 85,
-          end: 100,
-          show: false
-        }
-      ],
       series: [
         {
           name: '偏离值',
@@ -485,15 +479,6 @@
           lineStyle: { color: rule, opacity: 0.4 }
         }
       },
-      dataZoom: [
-        {
-          type: 'inside',
-          xAxisIndex: [0, 1, 2],
-          start: 85,
-          end: 100,
-          show: false
-        }
-      ],
       graphic: [
         {
           type: 'text',
@@ -589,6 +574,9 @@
   chart.setOption(getMainOption());
   devChart.setOption(getDevOption());
   rsiChart.setOption(getRSIOption());
+
+  // Connect charts for synchronized zoom/pan
+  echarts.connect('gza-charts');
 
   window.addEventListener('resize', function() {
     chart.resize();
