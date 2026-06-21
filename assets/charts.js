@@ -37,26 +37,40 @@
     return dev;
   }
 
-  // --- Calculate RSI(period) ---
+  // --- Calculate RSI(period) - Wilder's smoothing method ---
   function calcRSI(closeArr, period) {
     var rsi = [];
+    var gainsEma = null;
+    var lossesEma = null;
+
     for (var i = 0; i < closeArr.length; i++) {
       if (i < period) {
         rsi.push(null);
         continue;
       }
-      var gains = 0, losses = 0;
-      for (var j = i - period + 1; j <= i; j++) {
-        var change = closeArr[j] - closeArr[j - 1];
-        if (change > 0) gains += change;
-        else losses -= change;
+
+      if (gainsEma === null) {
+        // First value: simple average
+        var gains = 0, losses = 0;
+        for (var j = i - period + 1; j <= i; j++) {
+          var change = closeArr[j] - closeArr[j - 1];
+          if (change > 0) gains += change;
+          else losses -= change;
+        }
+        gainsEma = gains / period;
+        lossesEma = losses / period;
+      } else {
+        var change = closeArr[i] - closeArr[i - 1];
+        var gain = change > 0 ? change : 0;
+        var loss = change < 0 ? -change : 0;
+        gainsEma = (gainsEma * (period - 1) + gain) / period;
+        lossesEma = (lossesEma * (period - 1) + loss) / period;
       }
-      var avgGain = gains / period;
-      var avgLoss = losses / period;
-      if (avgLoss === 0) {
+
+      if (lossesEma === 0) {
         rsi.push(100);
       } else {
-        var rs = avgGain / avgLoss;
+        var rs = gainsEma / lossesEma;
         rsi.push(100 - 100 / (1 + rs));
       }
     }
