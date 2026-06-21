@@ -573,19 +573,21 @@
   rsiChart.setOption(getRSIOption());
 
   // Synchronize zoom across all charts
+  var isSyncing = false;
   function syncZoom(sourceChart, targetCharts) {
     sourceChart.on('dataZoom', function(params) {
+      if (isSyncing) return;
       var opt = sourceChart.getOption().dataZoom;
       if (!opt || !opt.length) return;
       var start = opt[0].start;
       var end = opt[0].end;
+      isSyncing = true;
       targetCharts.forEach(function(tc) {
-        tc.dispatchAction({
-          type: 'dataZoom',
-          start: start,
-          end: end
+        tc.setOption({
+          dataZoom: [{ start: start, end: end }]
         });
       });
+      isSyncing = false;
     });
   }
 
