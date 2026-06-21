@@ -7,9 +7,6 @@
   var rule = style.getPropertyValue('--rule').trim();
   var bg2 = style.getPropertyValue('--bg2').trim();
 
-  // Current mode: 'gza' (国证A指全收益) or 'zxl' (中证流通价格)
-  var currentMode = 'gza';
-
   // --- Calculate MA1250 ---
   function calcMA1250(closeArr) {
     var ma = [];
@@ -68,8 +65,8 @@
 
   // --- Stats bar ---
   function updateStats() {
-    var closeArr = currentMode === 'gza' ? GZA_CLOSE : ZXL_CLOSE;
-    var label = currentMode === 'gza' ? '国证A指' : '中证流通';
+    var closeArr = GZA_CLOSE;
+    var label = '国证A指';
     var lastClose = closeArr[closeArr.length - 1];
     var prevClose = closeArr[closeArr.length - 2];
     var changeVal = lastClose - prevClose;
@@ -105,7 +102,7 @@
   var rsiChart = echarts.init(document.getElementById('chart-rsi'), null, { renderer: 'svg', group: 'gza-charts' });
 
   function buildMainData() {
-    var closeArr = currentMode === 'gza' ? GZA_CLOSE : ZXL_CLOSE;
+    var closeArr = GZA_CLOSE;
     var closeData = [];
     var maData = [];
     for (var i = 0; i < GZA_DATES.length; i++) {
@@ -139,7 +136,7 @@
 
   function getMainOption() {
     var data = buildMainData();
-    var label = currentMode === 'gza' ? '国证A指收盘价' : '中证流通收盘价';
+    var label = '国证A指收盘价';
 
     return {
       animation: false,
@@ -293,7 +290,7 @@
 
   function getDevOption() {
     var devData = buildDevData();
-    var label = currentMode === 'gza' ? '国证A指' : '中证流通';
+    var label = '国证A指';
 
     return {
       animation: false,
@@ -364,6 +361,13 @@
           lineStyle: { color: rule, opacity: 0.4 }
         }
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 85,
+          end: 100
+        }
+      ],
       series: [
         {
           name: '偏离值',
@@ -404,7 +408,7 @@
 
   function getRSIOption() {
     var rsiData = buildRSIData();
-    var label = currentMode === 'gza' ? '国证A指' : '中证流通';
+    var label = '国证A指';
 
     return {
       animation: false,
@@ -476,6 +480,13 @@
           lineStyle: { color: rule, opacity: 0.4 }
         }
       },
+      dataZoom: [
+        {
+          type: 'inside',
+          start: 85,
+          end: 100
+        }
+      ],
       graphic: [
         {
           type: 'text',
@@ -600,29 +611,4 @@
     devChart.resize();
     rsiChart.resize();
   });
-
-  // --- Mode switcher ---
-  var btnGza = document.getElementById('btn-gza');
-  var btnZxl = document.getElementById('btn-zxl');
-
-  function setMode(mode) {
-    currentMode = mode;
-    calcData = updateStats();
-    chart.setOption(getMainOption(), true);
-    devChart.setOption(getDevOption(), true);
-    rsiChart.setOption(getRSIOption(), true);
-
-    if (mode === 'gza') {
-      btnGza.classList.add('active');
-      btnZxl.classList.remove('active');
-      document.querySelector('.legend-item.price span:last-child').textContent = '国证A指收盘价（全收益）';
-    } else {
-      btnGza.classList.remove('active');
-      btnZxl.classList.add('active');
-      document.querySelector('.legend-item.price span:last-child').textContent = '中证流通收盘价（价格指数）';
-    }
-  }
-
-  btnGza.addEventListener('click', function() { setMode('gza'); });
-  btnZxl.addEventListener('click', function() { setMode('zxl'); });
 })();
