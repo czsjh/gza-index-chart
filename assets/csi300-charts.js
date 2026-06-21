@@ -157,12 +157,7 @@
           type: 'value',
           scale: true,
           position: 'left',
-          min: function(value) {
-            return Math.floor(value.min - (value.max - value.min) * 0.08);
-          },
-          max: function(value) {
-            return Math.ceil(value.max + (value.max - value.min) * 0.05);
-          },
+          min: 0,
           axisLine: { show: false },
           axisTick: { show: false },
           axisLabel: {
@@ -181,12 +176,7 @@
           type: 'value',
           scale: true,
           position: 'right',
-          min: function(value) {
-            return Math.floor(value.min - (value.max - value.min) * 0.08);
-          },
-          max: function(value) {
-            return Math.ceil(value.max + (value.max - value.min) * 0.05);
-          },
+          min: 0,
           axisLine: { show: false },
           axisTick: { show: false },
           axisLabel: {
