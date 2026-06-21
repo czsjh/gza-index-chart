@@ -67,6 +67,38 @@
       margin-top: 0.35rem;
     }
 
+    /* Mode switcher */
+    .mode-switcher {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0.5rem 2rem;
+    }
+    .mode-switcher-inner {
+      display: inline-flex;
+      background: var(--bg2);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .mode-btn {
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font);
+    }
+    .mode-btn:hover {
+      color: var(--ink);
+    }
+    .mode-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
     /* Stats bar */
     .stats-bar {
       max-width: var(--max);
@@ -144,6 +176,17 @@
       margin-top: 0.5rem;
     }
 
+    #chart-csi300-main {
+      width: 100%;
+      height: 520px;
+    }
+
+    #chart-csi300-deviation {
+      width: 100%;
+      height: 220px;
+      margin-top: 0.5rem;
+    }
+
     /* Legend */
     .custom-legend {
       display: flex;
@@ -182,11 +225,14 @@
     @media (max-width: 768px) {
       .page-header { padding: 1.5rem 1rem 0.75rem; }
       .page-header h1 { font-size: 1.3rem; }
+      .mode-switcher { padding: 0.5rem 1rem; }
       .stats-bar { padding: 0.5rem 1rem; gap: 1rem; }
       .chart-section { padding: 0.5rem 1rem 1.5rem; }
       #chart-main { height: 350px; }
       #chart-deviation { height: 160px; }
       #chart-rsi { height: 160px; }
+      #chart-csi300-main { height: 350px; }
+      #chart-csi300-deviation { height: 160px; }
       .page-footer { padding: 1rem; }
     }
   </style>
@@ -225,12 +271,45 @@
     </div>
   </section>
 
+  <!-- 沪深300全收益 vs 混合基金指数 -->
+  <header class="page-header" style="margin-top:1rem">
+    <h1>沪深300全收益 vs 中证混合基金指数</h1>
+    <p class="subtitle">数据区间：2002-01-01 至 2026-06-17 | 数据来源：AKShare（中证指数）</p>
+  </header>
+
+  <div class="stats-bar" id="stats-bar-csi300">
+    <!-- Filled by JS -->
+  </div>
+
+  <section class="chart-section">
+    <div class="chart-container">
+      <div class="chart-title">
+        <span class="dot" style="background:#3b82f6"></span> 沪深300全收益
+        <span style="margin-left:1rem" class="dot" style="background:#22c55e"></span> 混合基金指数
+      </div>
+      <div id="chart-csi300-main"></div>
+      <div id="chart-csi300-deviation"></div>
+      <div class="custom-legend">
+        <div class="legend-item">
+          <span class="legend-line" style="background:#3b82f6"></span>
+          <span>沪深300全收益指数（H00300）</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-line" style="background:#22c55e"></span>
+          <span>中证混合型基金指数（H11022）</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer class="page-footer">
-    <p>国证A指（399317）由深交所旗下国证指数公司发布，是万得全A指数的最佳免费替代。该指数本身为全收益指数，包含股息再投资收益。1250日均线基于1250个交易日（约5年）滚动计算。</p>
+    <p>沪深300全收益指数（H00300）包含股息再投资收益。中证混合型基金指数（H11022）反映混合型基金整体表现，可作为偏债混合基金的替代参考。偏离度基于沪深300全收益相对其1250日均线的百分比偏离。</p>
   </footer>
 
   <script src="./shared/js/echarts.min.js"></script>
   <script src="./assets/gza-data.js"></script>
   <script src="./assets/charts.js"></script>
+  <script src="./assets/csi300-data.js"></script>
+  <script src="./assets/csi300-charts.js"></script>
 </body>
 </html>
