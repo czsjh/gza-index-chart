@@ -572,8 +572,26 @@
   devChart.setOption(getDevOption());
   rsiChart.setOption(getRSIOption());
 
-  // Connect charts for synchronized zoom/pan
-  echarts.connect('gza-charts');
+  // Synchronize zoom across all charts
+  function syncZoom(sourceChart, targetCharts) {
+    sourceChart.on('dataZoom', function(params) {
+      var opt = sourceChart.getOption().dataZoom;
+      if (!opt || !opt.length) return;
+      var start = opt[0].start;
+      var end = opt[0].end;
+      targetCharts.forEach(function(tc) {
+        tc.dispatchAction({
+          type: 'dataZoom',
+          start: start,
+          end: end
+        });
+      });
+    });
+  }
+
+  syncZoom(chart, [devChart, rsiChart]);
+  syncZoom(devChart, [chart, rsiChart]);
+  syncZoom(rsiChart, [chart, devChart]);
 
   window.addEventListener('resize', function() {
     chart.resize();
