@@ -58,7 +58,7 @@
     var statsHtml = '' +
       '<div class="stat-item"><span class="stat-label">沪深300全收益</span><span class="stat-value">' + last300.toFixed(2) + '</span></div>' +
       '<div class="stat-item"><span class="stat-label">日涨跌</span><span class="stat-value ' + (change300 >= 0 ? 'up' : 'down') + '">' + (change300 >= 0 ? '+' : '') + change300.toFixed(2) + ' (' + (change300Pct >= 0 ? '+' : '') + change300Pct.toFixed(2) + '%)</span></div>' +
-      '<div class="stat-item"><span class="stat-label">混合基金指数</span><span class="stat-value">' + lastFund.toFixed(2) + '</span></div>' +
+      '<div class="stat-item"><span class="stat-label">非纯债债基指数</span><span class="stat-value">' + lastFund.toFixed(2) + '</span></div>' +
       '<div class="stat-item"><span class="stat-label">基金日涨跌</span><span class="stat-value ' + (changeFund >= 0 ? 'up' : 'down') + '">' + (changeFund >= 0 ? '+' : '') + changeFund.toFixed(2) + ' (' + (changeFundPct >= 0 ? '+' : '') + changeFundPct.toFixed(2) + '%)</span></div>' +
       '<div class="stat-item"><span class="stat-label">偏离均线</span><span class="stat-value ' + (lastDev >= 0 ? 'up' : 'down') + '">' + (lastDev >= 0 ? '+' : '') + lastDev.toFixed(1) + '%</span></div>' +
       '<div class="stat-item"><span class="stat-label">历史最高偏离</span><span class="stat-value up">+' + maxDev.toFixed(1) + '%</span></div>';
@@ -120,7 +120,7 @@
           var html = '<div style="font-weight:600;margin-bottom:4px">' + date + '</div>';
           params.forEach(function(p) {
             var color = p.seriesIndex === 0 ? '#3b82f6' : '#22c55e';
-            var name = p.seriesIndex === 0 ? '沪深300全收益' : '混合基金指数';
+            var name = p.seriesIndex === 0 ? '沪深300全收益' : '非纯债债基指数';
             html += '<div style="display:flex;align-items:center;gap:6px">' +
               '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + color + '"></span>' +
               '<span style="color:' + muted + '">' + name + '</span>' +
@@ -255,7 +255,7 @@
           }
         },
         {
-          name: '混合基金指数',
+          name: '非纯债债基指数',
           type: 'line',
           yAxisIndex: 1,
           data: data.closeFund,
