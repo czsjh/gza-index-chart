@@ -152,44 +152,25 @@
           lineStyle: { color: rule, opacity: 0.4 }
         }
       },
-      yAxis: [
-        {
-          type: 'value',
-          scale: true,
-          position: 'left',
-          min: 0,
-          axisLine: { show: false },
-          axisTick: { show: false },
-          axisLabel: {
-            color: '#3b82f6',
-            fontSize: 11,
-            fontFamily: "'GeistMono', monospace",
-            formatter: function(v) {
-              return v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v.toFixed(0);
-            }
-          },
-          splitLine: {
-            lineStyle: { color: rule, opacity: 0.4 }
+      yAxis: {
+        type: 'value',
+        scale: true,
+        position: 'left',
+        min: 0,
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: {
+          color: ink,
+          fontSize: 11,
+          fontFamily: "'GeistMono', monospace",
+          formatter: function(v) {
+            return v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v.toFixed(0);
           }
         },
-        {
-          type: 'value',
-          scale: true,
-          position: 'right',
-          min: 0,
-          axisLine: { show: false },
-          axisTick: { show: false },
-          axisLabel: {
-            color: '#22c55e',
-            fontSize: 11,
-            fontFamily: "'GeistMono', monospace",
-            formatter: function(v) {
-              return v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v.toFixed(0);
-            }
-          },
-          splitLine: { show: false }
+        splitLine: {
+          lineStyle: { color: rule, opacity: 0.4 }
         }
-      ],
+      },
       dataZoom: [
         {
           type: 'inside',
@@ -223,7 +204,6 @@
         {
           name: '沪深300全收益',
           type: 'line',
-          yAxisIndex: 0,
           data: data.close300,
           showSymbol: false,
           lineStyle: {
@@ -247,7 +227,6 @@
         {
           name: '非纯债基指数',
           type: 'line',
-          yAxisIndex: 1,
           data: data.closeFund,
           showSymbol: false,
           lineStyle: {
