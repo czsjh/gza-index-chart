@@ -235,13 +235,13 @@
         {
           type: 'inside',
           xAxisIndex: [0, 1, 2],
-          start: 85,
+          start: 0,
           end: 100
         },
         {
           type: 'slider',
           xAxisIndex: [0, 1, 2],
-          start: 85,
+          start: 0,
           end: 100,
           height: 24,
           bottom: 8,
@@ -378,7 +378,7 @@
       dataZoom: [
         {
           type: 'inside',
-          start: 85,
+          start: 0,
           end: 100
         }
       ],
@@ -497,7 +497,7 @@
       dataZoom: [
         {
           type: 'inside',
-          start: 85,
+          start: 0,
           end: 100
         }
       ],
