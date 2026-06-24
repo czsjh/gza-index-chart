@@ -495,8 +495,8 @@
       },
       yAxis: {
         type: 'value',
-        min: 0,
-        max: 100,
+        min: 20,
+        max: 80,
         axisLine: { show: false },
         axisTick: { show: false },
         axisLabel: {
