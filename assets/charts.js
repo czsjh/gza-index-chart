@@ -119,13 +119,15 @@
     var closeArr = GZA_CLOSE;
     var closeData = [];
     var maData = [];
+    var ma85Data = [];
     for (var i = 0; i < GZA_DATES.length; i++) {
       closeData.push([GZA_DATES[i], closeArr[i]]);
       if (calcData.ma1250[i] !== null) {
         maData.push([GZA_DATES[i], calcData.ma1250[i]]);
+        ma85Data.push([GZA_DATES[i], calcData.ma1250[i] * 0.85]);
       }
     }
-    return { closeData: closeData, maData: maData };
+    return { closeData: closeData, maData: maData, ma85Data: ma85Data };
   }
 
   function buildDevData() {
@@ -176,7 +178,7 @@
           var html = '<div style="font-weight:600;margin-bottom:4px">' + date + '</div>';
           params.forEach(function(p) {
             var color = p.seriesIndex === 0 ? accent : accent2;
-            var name = p.seriesIndex === 0 ? label : '1250日均线';
+            var name = p.seriesIndex === 0 ? label : (p.seriesIndex === 1 ? '1250日均线' : '1250日均线×85%');
             html += '<div style="display:flex;align-items:center;gap:6px">' +
               '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + color + '"></span>' +
               '<span style="color:' + muted + '">' + name + '</span>' +
@@ -296,6 +298,21 @@
           },
           emphasis: {
             lineStyle: { width: 3 }
+          }
+        },
+        {
+          name: '1250日均线×85%',
+          type: 'line',
+          data: data.ma85Data,
+          showSymbol: false,
+          lineStyle: {
+            color: accent2,
+            width: 1.2,
+            type: 'dashed',
+            opacity: 0.6
+          },
+          emphasis: {
+            lineStyle: { width: 2 }
           }
         }
       ]
