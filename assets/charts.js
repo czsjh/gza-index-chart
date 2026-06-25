@@ -518,50 +518,7 @@
           end: 100
         }
       ],
-      graphic: [
-        {
-          type: 'text',
-          left: 62,
-          top: '16.7%',
-          style: {
-            text: '超买 70',
-            fill: '#fbbf24',
-            font: 'bold 10px InstrumentSans, sans-serif',
-            backgroundColor: '#1a2035',
-            padding: [2, 5],
-            borderRadius: 3
-          },
-          z: 100
-        },
-        {
-          type: 'text',
-          left: 62,
-          top: '38.3%',
-          style: {
-            text: '超买 57',
-            fill: '#fbbf24',
-            font: 'bold 10px InstrumentSans, sans-serif',
-            backgroundColor: '#1a2035',
-            padding: [2, 5],
-            borderRadius: 3
-          },
-          z: 100
-        },
-        {
-          type: 'text',
-          left: 62,
-          top: '61.7%',
-          style: {
-            text: '超卖 43',
-            fill: '#fbbf24',
-            font: 'bold 10px InstrumentSans, sans-serif',
-            backgroundColor: '#1a2035',
-            padding: [2, 5],
-            borderRadius: 3
-          },
-          z: 100
-        }
-      ],
+      graphic: [],
       series: [
         {
           name: 'RSI(90)',
@@ -590,7 +547,21 @@
               type: 'dashed',
               opacity: 0.45
             },
-            label: { show: false },
+            label: {
+              show: true,
+              position: 'insideStartTop',
+              formatter: function(p) {
+                var labels = { '70': '超买 70', '57': '超买 57', '43': '超卖 43' };
+                return labels[p.value] || p.value;
+              },
+              fontSize: 10,
+              fontWeight: 'bold',
+              fontFamily: 'InstrumentSans, sans-serif',
+              color: '#fbbf24',
+              backgroundColor: '#1a2035',
+              padding: [2, 5],
+              borderRadius: 3
+            },
             data: [
               { yAxis: 70 },
               { yAxis: 57 },
