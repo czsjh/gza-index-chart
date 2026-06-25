@@ -7,6 +7,14 @@
   var rule = style.getPropertyValue('--rule').trim();
   var bg2 = style.getPropertyValue('--bg2').trim();
 
+  function fmtDate(v) {
+    if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+    var d = new Date(v);
+    var m = d.getMonth() + 1;
+    var day = d.getDate();
+    return d.getFullYear() + '-' + (m < 10 ? '0' + m : m) + '-' + (day < 10 ? '0' + day : day);
+  }
+
   // --- Calculate MA1250 ---
   function calcMA1250(closeArr) {
     var ma = [];
@@ -174,7 +182,7 @@
           fontSize: 12
         },
         formatter: function(params) {
-          var date = params[0].axisValue;
+          var date = fmtDate(params[0].axisValue);
           var html = '<div style="font-weight:600;margin-bottom:4px">' + date + '</div>';
           params.forEach(function(p) {
             var color = p.seriesIndex === 0 ? accent : accent2;
@@ -346,7 +354,7 @@
           var p = params[0];
           var val = p.value[1];
           var color = val >= 0 ? '#ef4444' : '#22c55e';
-          return '<div style="font-weight:600;margin-bottom:4px">' + p.axisValue + '</div>' +
+          return '<div style="font-weight:600;margin-bottom:4px">' + fmtDate(p.axisValue) + '</div>' +
             '<div style="display:flex;align-items:center;gap:6px">' +
             '<span style="color:' + muted + '">' + label + '偏离1250日均线</span>' +
             '<span style="margin-left:auto;font-weight:600;color:' + color + '">' + (val >= 0 ? '+' : '') + val.toFixed(2) + '%</span>' +
@@ -464,7 +472,7 @@
           var p = params[0];
           var val = p.value[1];
           var color = val >= 70 ? '#ef4444' : val <= 43 ? '#22c55e' : ink;
-          return '<div style="font-weight:600;margin-bottom:4px">' + p.axisValue + '</div>' +
+          return '<div style="font-weight:600;margin-bottom:4px">' + fmtDate(p.axisValue) + '</div>' +
             '<div style="display:flex;align-items:center;gap:6px">' +
             '<span style="color:' + muted + '">' + label + ' RSI(90)</span>' +
             '<span style="margin-left:auto;font-weight:600;color:' + color + '">' + val.toFixed(2) + '</span>' +
