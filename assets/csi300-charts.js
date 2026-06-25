@@ -77,6 +77,12 @@
 
   var calcData = updateStats();
 
+  // Update date range subtitle
+  var csiRange = document.getElementById('csi300-date-range');
+  if (csiRange && CSI300_DATES.length > 0) {
+    csiRange.textContent = '数据区间：' + CSI300_DATES[0] + ' 至 ' + CSI300_DATES[CSI300_DATES.length - 1] + ' | 数据来源：AKShare（中证指数）';
+  }
+
   // --- Charts ---
   var chart = echarts.init(document.getElementById('chart-csi300-main'), null, { renderer: 'svg' });
   var devChart = echarts.init(document.getElementById('chart-csi300-deviation'), null, { renderer: 'svg' });

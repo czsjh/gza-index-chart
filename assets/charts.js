@@ -118,6 +118,12 @@
 
   var calcData = updateStats();
 
+  // Update date range subtitle
+  var gzaRange = document.getElementById('gza-date-range');
+  if (gzaRange && GZA_DATES.length > 0) {
+    gzaRange.textContent = '数据区间：' + GZA_DATES[0] + ' 至 ' + GZA_DATES[GZA_DATES.length - 1] + ' | 数据来源：AKShare（东方财富）';
+  }
+
   // --- Charts ---
   var chart = echarts.init(document.getElementById('chart-main'), null, { renderer: 'svg', group: 'gza-charts' });
   var devChart = echarts.init(document.getElementById('chart-deviation'), null, { renderer: 'svg', group: 'gza-charts' });
