@@ -522,7 +522,7 @@
         {
           type: 'text',
           left: 62,
-          top: '33.3%',
+          top: '16.7%',
           style: {
             text: '超买 70',
             fill: '#fbbf24',
@@ -536,7 +536,7 @@
         {
           type: 'text',
           left: 62,
-          top: '40.6%',
+          top: '38.3%',
           style: {
             text: '超买 57',
             fill: '#fbbf24',
@@ -550,7 +550,7 @@
         {
           type: 'text',
           left: 62,
-          top: '48.3%',
+          top: '61.7%',
           style: {
             text: '超卖 43',
             fill: '#fbbf24',
