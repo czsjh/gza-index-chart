@@ -72,11 +72,11 @@ def update_csi300_data():
         ret = (close300_list[i] - close300_list[i - 1]) / close300_list[i - 1]
         new_close300.append(new_close300[-1] * (1 + ret))
 
-    # 归一化非纯债基，起始100，平移-70使起始=30
+    # 归一化非纯债基，起始100，每日涨跌幅缩小为60%，平移-70使起始=30
     new_closefund = [100.0]
     for i in range(1, len(common_dates)):
         ret = (closefund_list[i] - closefund_list[i - 1]) / closefund_list[i - 1]
-        new_closefund.append(new_closefund[-1] * (1 + ret))
+        new_closefund.append(new_closefund[-1] * (1 + ret * 0.6))
 
     shifted_fund = [round(v - 70, 2) for v in new_closefund]
 
@@ -85,7 +85,7 @@ def update_csi300_data():
     print(f"  非纯债基: {shifted_fund[0]:.2f} -> {shifted_fund[-1]:.2f}")
 
     js = f"""// CSI 300 Total Return Index + CSI Non-pure Bond Fund Index
-// CSI300 starts at 100, Fund starts at 30 (shifted -70)
+// CSI300 starts at 100, Fund starts at 30 (shifted -70), daily return scaled to 60%
 // Auto-updated: {datetime.now().strftime('%Y-%m-%d')}
 // Data source: AKShare (CSIndex)
 
